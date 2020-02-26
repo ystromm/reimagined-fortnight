@@ -66,7 +66,10 @@ class HelloWorldServer {
     internal class GreeterImpl : GreeterGrpc.GreeterImplBase() {
 
         override fun sayHello(req: HelloRequest, responseObserver: StreamObserver<HelloReply>) {
-            val reply = HelloReply.newBuilder().setMessage("Hello ${req.name}").build()
+            logger.log(Level.INFO, "Received request ${req}")
+            val greeting = if (req.greeting != null && req.greeting != "") req.greeting else "Hello"
+            val reply = HelloReply.newBuilder().setMessage("$greeting ${req.name}").build()
+            logger.log(Level.INFO, "Replied with ${reply}")
             responseObserver.onNext(reply)
             responseObserver.onCompleted()
         }

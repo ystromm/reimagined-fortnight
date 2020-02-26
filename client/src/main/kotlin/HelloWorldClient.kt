@@ -49,7 +49,7 @@ internal constructor(private val channel: ManagedChannel) {
     /** Say hello to server.  */
     fun greet(name: String) {
         logger.log(Level.INFO, "Will try to greet {0}...", name)
-        val request = HelloRequest.newBuilder().setName(name).build()
+        val request = HelloRequest.newBuilder().setName(name).setGreeting("Goodbye cruel").build()
         val response: HelloReply =  try {
             blockingStub.sayHello(request)
         } catch (e: StatusRuntimeException) {
